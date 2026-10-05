@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
+
+    <title>برنامک ایتا</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css">
+
+    <style>
+        :root {
+            --bg: var(--tg-theme-bg-color, #ffffff);
+            --text: var(--tg-theme-text-color, #000000);
+            --btn: var(--tg-theme-button-color, #FF7634);
+            --btn-text: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Sahel, Tahoma, sans-serif;
+            padding-top: var(--tg-safe-area-inset-top, 0px);
+            padding-bottom: var(--tg-safe-area-inset-bottom, 0px);
+            padding-left: var(--tg-safe-area-inset-left, 0px);
+            padding-right: var(--tg-safe-area-inset-right, 0px);
+        }
+
+        .btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            background: var(--btn);
+            color: var(--btn-text);
+            font-family: inherit;
+            font-size: 24px;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(255, 118, 52, 0.4);
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                flex-direction: column;
+            }
+        }
+
+.btn.btn-ghost {
+    background: transparent;
+    color: var(--btn);
+    border: 2px solid var(--btn);
+    box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+
+    <a class="btn" data-url="https://eitaa.com/eitaarfand_app/myuserid">برنامــک‌نمایــش‌آیدی‌عــددی</a>
+    <a class="btn" data-url="https://eitaa.com/eitaarfand_app/emoji">برنامک‌ساخت‌زنجیره‌ایموجی</a>
+    <a class="btn btn-ghost" data-url="https://eitaa.com/eitaarfand_app/Support">ناشناس ایترفند</a>
+    <a class="btn btn-ghost" data-url="https://eitaa.com/joinchat/2337801982Ccc4771f1f7">کانال ایترفند</a>
+
+    <script>
+        if (window.Eitaa && window.Eitaa.WebApp) {
+            Eitaa.WebApp.ready();
+            Eitaa.WebApp.expand();
+        }
+
+        document.querySelectorAll('.btn[data-url]').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+
+                const url = this.dataset.url;
+                if (window.Eitaa && window.Eitaa.WebApp && Eitaa.WebApp.openLink) {
+                    Eitaa.WebApp.openLink(url);
+                } else {
+                    window.open(url, '_blank');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
